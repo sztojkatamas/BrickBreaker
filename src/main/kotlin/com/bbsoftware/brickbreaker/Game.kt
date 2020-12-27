@@ -14,7 +14,6 @@ object Game {
 
     val scene = GameScene(width, heigth)
 
-    //var mousePos = Vector2()
     var stop = false
 
     val world = World(Vector2(0.0f, 0.0f), true)

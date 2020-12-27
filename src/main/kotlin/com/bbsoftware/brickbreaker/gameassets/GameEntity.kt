@@ -17,8 +17,6 @@ abstract class GameEntity(open val name :String) {
 
     var moveable = false
     open var position :Vector2 = Vector2(0f, 0f)
-//    abstract var x :Float
-//    abstract var y :Float
     open var width :Float = 0f
     open var height :Float = 0f
 

@@ -24,7 +24,7 @@ class BrickBreakerApplication(): ApplicationAdapter() {
     private lateinit var spriteBatch :PolygonSpriteBatch //SpriteBatch
     private lateinit var shapeRenderer :ShapeRenderer
     private lateinit var debugRenderer :Box2DDebugRenderer
-    //private val scene = GameScene(Game.width, Game.heigth)
+
     private val scene = Game.scene
     var debugMatrix: Matrix4? = null
 
