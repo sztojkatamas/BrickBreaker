@@ -1,0 +1,84 @@
+plugins {
+	id("org.jetbrains.kotlin.jvm") version "1.4.20"
+	id 'application'
+	id 'idea'
+}
+
+repositories {
+		mavenLocal()
+		jcenter()
+		mavenCentral()
+		google()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url 'https://jitpack.io' }
+}
+
+	dependencies {
+		implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt"
+
+		api "com.badlogicgames.gdx:gdx:$gdxVersion"
+		api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+		api "io.github.libktx:ktx-math:$ktxMathVersion"
+		api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+		api "io.github.libktx:ktx-freetype:$ktxFreetypeVersion"
+		api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+		api "io.github.libktx:ktx-box2d:$ktxBox2dVersion"
+		api "io.github.libktx:ktx-log:$ktxLogVersion"
+		api "io.github.libktx:ktx-assets:$ktxAssetsVersion"
+		api "io.github.libktx:ktx-scene2d:$ktxScene2DVersion"
+		api "io.github.libktx:ktx-graphics:$ktxGraphicsVersion"
+		api "io.github.libktx:ktx-actors:$ktxActorsVersion"
+
+		implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+		implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+		implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+		implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+
+		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+		testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(14)
+	}
+}
+
+compileKotlin {
+	kotlinOptions {
+		jvmTarget = "14"
+	}
+}
+
+sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
+mainClassName = 'com.bbsoftware.brickbreaker.GameLauncher'
+
+import org.gradle.internal.os.OperatingSystem
+
+run {
+	workingDir = rootProject.file('assets').path
+	setIgnoreExitValue(true)
+
+	if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
+		// Required to run LWJGL3 Java apps on MacOS
+		jvmArgs += "-XstartOnFirstThread"
+	}
+}
+
+jar {
+	archiveBaseName = "BrickBreaker"
+	dependsOn configurations.runtimeClasspath
+	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+	manifest {
+		attributes 'Main-Class': project.mainClassName
+	}
+	doLast {
+		file(archivePath).setExecutable(true, false)
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
