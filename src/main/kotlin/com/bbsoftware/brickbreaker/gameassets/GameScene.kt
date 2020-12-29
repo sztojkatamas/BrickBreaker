@@ -25,17 +25,19 @@ class GameScene(val width :Int, val height :Int) {
         entities.add(entity)
     }
 
-    fun getEntityByName(entityName :String) :GameEntity {
-        return entities.find { it.name.equals(entityName) }!!
+    fun removeEntity(entity :GameEntity) {
+        entities.remove(entity)
     }
 
+    fun getEntityByName(entityName :String) :GameEntity {
+        return entities.find { it.name == entityName }!!
+    }
 
     fun renderElements(renderer: Any) {
         when (renderer) {
-            is PolygonSpriteBatch -> { entities.filter { it.isShape().equals(false) }.forEach { it.render(renderer) } }
-            is ShapeRenderer -> { entities.filter { it.isShape().equals(true) }.forEach { it.render(renderer) } }
+            is PolygonSpriteBatch -> { entities.filter { !it.renderAsShape() }.forEach { it.render(renderer) } }
+            is ShapeRenderer -> { entities.filter { it.renderAsShape() }.forEach { it.render(renderer) } }
         }
-
     }
 
     fun processEvents() {
@@ -44,5 +46,9 @@ class GameScene(val width :Int, val height :Int) {
 
     fun updateMovements(deltaTime: Float) {
         entities.filter { it.moveable.equals(true) }.forEach { it.updatePosition(deltaTime) }
+    }
+
+    fun getEntityCount(): Int {
+        return entities.size
     }
 }

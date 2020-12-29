@@ -1,7 +1,7 @@
 package com.bbsoftware.brickbreaker
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Keys.*
 
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.math.Vector2
@@ -11,36 +11,24 @@ import ktx.log.*
 class KeyboardProcessor() : InputProcessor {
     private val keyDown = mutableSetOf<Int>()
 
-    fun isKeyDown(keycode: Int): Boolean {
+    fun isKeyPressedDown(keycode: Int): Boolean {
         return keyDown.contains(keycode)
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        info { "Key down: {$keycode}" }
         keyDown.add(keycode)
-
-
         return true
     }
 
     override fun keyUp(keycode: Int): Boolean {
         keyDown.remove(keycode)
-        if (keycode == Input.Keys.ESCAPE) {
-            Gdx.app.exit()
-        }
-        if (keycode == Input.Keys.F10) {
-            Game.fullscreen = !Game.fullscreen
-        }
-        if (keycode == Input.Keys.SPACE) {
-            Game.stop = !Game.stop
-        }
-        if (keycode == Input.Keys.PLUS) {
-            Game.addEvent(Command("theball", "speed", 10f))
-        }
-        if (keycode == Input.Keys.MINUS) {
-            Game.addEvent(Command("theball", "speed", -10f))
-        }
 
+        when (keycode) {
+            ESCAPE -> { Gdx.app.exit() }
+            F10 -> { Game.fullscreen = !Game.fullscreen }
+            F11 -> { Game.debugvision = !Game.debugvision }
+            SPACE -> { Game.stop = !Game.stop }
+        }
         return false
     }
 
@@ -55,7 +43,7 @@ class KeyboardProcessor() : InputProcessor {
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         Game.countCollisions = true
-        repeat(5) {
+        repeat(1) {
             Game.addEvent(Command("theball${it+1}", "moveto", Vector2(screenX.toFloat(), screenY.toFloat())))
         }
         return false

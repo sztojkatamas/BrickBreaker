@@ -20,7 +20,7 @@ abstract class GameEntity(open val name :String) {
     open var width :Float = 0f
     open var height :Float = 0f
 
-    abstract fun isShape() :Boolean
+    abstract fun renderAsShape() :Boolean
     abstract fun render(batch: Batch)
     abstract fun render(shaperenderer: ShapeRenderer)
 

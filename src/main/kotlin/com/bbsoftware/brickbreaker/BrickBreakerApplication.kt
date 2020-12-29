@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Matrix4
 import com.bbsoftware.brickbreaker.core.CollisionListener
 import com.bbsoftware.brickbreaker.core.assetmanager.SoundManager
 import com.bbsoftware.brickbreaker.core.assetmanager.TextureManager
+import com.bbsoftware.brickbreaker.gameassets.Brick
 import com.bbsoftware.brickbreaker.gameassets.Paddle
 import kotlin.random.Random
 
@@ -73,6 +74,15 @@ class BrickBreakerApplication(): ApplicationAdapter() {
     override fun render() {
         fullScreenOrWindowed()
 
+        while (Game.hasEventFor("GAME")) {
+            val cmd = Game.takeEvent("GAME")
+            if (cmd.command == "destroy") {
+                val brick = cmd.payload as Brick
+                brick.cleanup()
+                Game.scene.removeEntity(brick)
+            }
+        }
+
         if (!Game.stop) {
             scene.processEvents()
             Game.world.step(Gdx.graphics.deltaTime, 4,4)
@@ -91,7 +101,6 @@ class BrickBreakerApplication(): ApplicationAdapter() {
         // Render Shape entities
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
         scene.renderElements(shapeRenderer)
-
         shapeRenderer.end()
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -104,8 +113,10 @@ class BrickBreakerApplication(): ApplicationAdapter() {
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        debugMatrix = spriteBatch.getProjectionMatrix().cpy().scale(Game.scale, Game.scale, 0f)//.scale(PIXELS_TO_METERS, PIXELS_TO_METERS, 0F)
-        debugRenderer.render(Game.world, debugMatrix)
+        if (Game.debugvision) {
+            debugMatrix = spriteBatch.getProjectionMatrix().cpy().scale(Game.scale, Game.scale, 0f)//.scale(PIXELS_TO_METERS, PIXELS_TO_METERS, 0F)
+            debugRenderer.render(Game.world, debugMatrix)
+        }
 
         // Stuff at the end
         printDebugInfo()
@@ -117,6 +128,7 @@ class BrickBreakerApplication(): ApplicationAdapter() {
         Gdx.graphics.setTitle("FPS: ${Gdx.graphics.getFramesPerSecond()} " +
                 //"Ball [$ballx][$bally]" +
                 "Queue{${Game.eventQueue.size}}" +
+                "Entities: ${Game.scene.getEntityCount()}" +
                 "Ball[${ball.position.x.toInt()}][${ball.position.y.toInt()}][speed:${ball.velocity}]" +
                 "<${ball.body.linearVelocity.len2()}>" +
 //                "Delta: ${Gdx.graphics.deltaTime} " +
@@ -128,7 +140,7 @@ class BrickBreakerApplication(): ApplicationAdapter() {
     private fun fullScreenOrWindowed() {
 
         if (!Game.fullscreen) {
-            Gdx.gl.glClearColor(1f, 0.6f, 0f, 1f)
+            Gdx.gl.glClearColor(0.2f, 0.6f, 0f, 1f)
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
             //Gdx.graphics.setWindowedMode(1024, 768)
 

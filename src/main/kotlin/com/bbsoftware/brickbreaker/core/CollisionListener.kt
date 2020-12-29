@@ -30,6 +30,8 @@ class CollisionListener : ContactListener {
         }
         if (ObjectA is Brick || ObjectB is Brick) {
             SoundManager.getSound("ballbrick").play()
+            if (ObjectA is Brick) { ObjectA.receiveDamage(15) }
+            if (ObjectB is Brick) { ObjectB.receiveDamage(15) }
         }
         if (ObjectA is Ball && ObjectB is Ball) {
             SoundManager.getSound("ballball").play()

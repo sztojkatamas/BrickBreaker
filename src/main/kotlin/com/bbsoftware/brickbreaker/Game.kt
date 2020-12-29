@@ -11,6 +11,7 @@ object Game {
     val heigth = 64 * 15
     val scale = 100f
     var countCollisions = false
+    var debugvision = false
 
     val scene = GameScene(width, heigth)
 

@@ -39,7 +39,7 @@ class Wall(
         body.createFixture(fixtureDef).userData = name
     }
 
-    override fun isShape() :Boolean { return false }
+    override fun renderAsShape() :Boolean { return false }
 
     override fun render(batch: Batch) {
         position = body.position.cpy().scl(Game.scale)

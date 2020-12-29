@@ -21,7 +21,7 @@ class Ball(override val name :String, override var position: Vector2) :GameEntit
     var body : Body
 
     init {
-        color = Color.LIME
+        color = Color.CLEAR
         size = 32f
         moveable = true
 
@@ -48,7 +48,7 @@ class Ball(override val name :String, override var position: Vector2) :GameEntit
 
     }
 
-    override fun isShape() :Boolean { return false}
+    override fun renderAsShape(): Boolean { return false }
 
     override fun render(batch: Batch) {
         batch.draw(texture, position.x - (size/2), position.y - (size/2f), size, size)
@@ -56,7 +56,7 @@ class Ball(override val name :String, override var position: Vector2) :GameEntit
 
     override fun render(shaperenderer: ShapeRenderer) {
         shaperenderer.color = color
-        shaperenderer.circle(position.x, position.y, size)
+        shaperenderer.circle(position.x, position.y, size/2)
     }
 
     override fun processEvents() {

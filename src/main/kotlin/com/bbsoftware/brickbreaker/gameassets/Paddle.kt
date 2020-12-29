@@ -51,7 +51,7 @@ class Paddle(override val name :String, override var position: Vector2) :GameEnt
         println("orig pos: ${body.position.y}")
     }
 
-    override fun isShape() :Boolean { return false }
+    override fun renderAsShape() :Boolean { return false }
 
     override fun render(batch: Batch) {
         val sprite = Sprite(texture, width.toInt(), height.toInt())
@@ -71,14 +71,14 @@ class Paddle(override val name :String, override var position: Vector2) :GameEnt
 
     override fun processEvents() {
         var lr = 0f
-        if ((Gdx.input.inputProcessor as KeyboardProcessor).isKeyDown(21)) {
+        if ((Gdx.input.inputProcessor as KeyboardProcessor).isKeyPressedDown(21)) {
             lr = -1f
-        } else if ((Gdx.input.inputProcessor as KeyboardProcessor).isKeyDown(22)) {
+        } else if ((Gdx.input.inputProcessor as KeyboardProcessor).isKeyPressedDown(22)) {
             lr = 1f
         }
 
         if(lr != 0f) {
-            body.setLinearVelocity(Vector2(lr, 0f))
+            body.linearVelocity = Vector2(lr, 0f)
         }
     }
 }
