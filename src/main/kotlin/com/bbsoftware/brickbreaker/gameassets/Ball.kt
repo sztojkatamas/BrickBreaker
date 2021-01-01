@@ -15,9 +15,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef
 class Ball(override val name :String, override var position: Vector2) :GameEntity(name) {
     override var texture = TextureManager.getTexture("ball")
 
-    ///private val ME = name
     var heading = Vector2(0f, 0f)
-    var velocity = 20f
     var body : Body
 
     init {
@@ -67,14 +65,8 @@ class Ball(override val name :String, override var position: Vector2) :GameEntit
                     val mousePos  = event.payload as Vector2
                     heading = Vector2(mousePos.x, Game.heigth - mousePos.y).minus(position).nor()
 
-                    body.applyForceToCenter(heading.cpy().scl(velocity), true)
+                    body.applyForceToCenter(heading.cpy().nor().scl(30f), true)
                  }
-                "speed" -> {
-                    velocity *= event.payload as Float
-                    if (velocity < 0f) {
-                        velocity = 0f
-                    }
-                }
             }
         }
     }

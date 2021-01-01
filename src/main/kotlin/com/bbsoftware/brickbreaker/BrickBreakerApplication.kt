@@ -32,7 +32,7 @@ class BrickBreakerApplication(): ApplicationAdapter() {
     override fun create() {
         spriteBatch = PolygonSpriteBatch()//SpriteBatch()
         shapeRenderer = ShapeRenderer()
-        Gdx.input.inputProcessor = KeyboardProcessor()
+        Gdx.input.inputProcessor = KeyboardAndMouseProcessor()
         debugRenderer = Box2DDebugRenderer()
         Game.world.setContactListener(CollisionListener())
 
@@ -129,8 +129,8 @@ class BrickBreakerApplication(): ApplicationAdapter() {
                 //"Ball [$ballx][$bally]" +
                 "Queue{${Game.eventQueue.size}}" +
                 "Entities: ${Game.scene.getEntityCount()}" +
-                "Ball[${ball.position.x.toInt()}][${ball.position.y.toInt()}][speed:${ball.velocity}]" +
-                "<${ball.body.linearVelocity.len2()}>" +
+                "Ball[${ball.position.x.toInt()}][${ball.position.y.toInt()}]" +
+                "Speed<${ball.body.linearVelocity.len()}>" +
 //                "Delta: ${Gdx.graphics.deltaTime} " +
 //                "W: ${Gdx.graphics.width} " +
 //                "H: ${Gdx.graphics.height}"

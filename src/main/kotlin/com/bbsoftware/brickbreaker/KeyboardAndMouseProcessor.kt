@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2
 import com.bbsoftware.brickbreaker.core.Command
 import ktx.log.*
 
-class KeyboardProcessor() : InputProcessor {
+class KeyboardAndMouseProcessor : InputProcessor {
     private val keyDown = mutableSetOf<Int>()
 
     fun isKeyPressedDown(keycode: Int): Boolean {
@@ -54,6 +54,7 @@ class KeyboardProcessor() : InputProcessor {
     }
 
     override fun mouseMoved(screenX: Int, screenY: Int): Boolean {
+        Game.addEvent(Command("thepaddle", "moveto", Vector2(screenX.toFloat(), screenY.toFloat())))
         return false
     }
 

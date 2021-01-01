@@ -34,6 +34,7 @@ class Brick(override val name :String, override var position: Vector2) :GameEnti
         val fixtureDef = FixtureDef()
         fixtureDef.shape = shape
         fixtureDef.density = 10000f
+        fixtureDef.restitution = 0.1f
         //fixtureDef.isSensor = true
 
         val fixture = body.createFixture(fixtureDef)

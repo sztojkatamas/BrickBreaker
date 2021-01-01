@@ -33,7 +33,7 @@ class Wall(
         val fixtureDef = FixtureDef()
         fixtureDef.shape = shape
         fixtureDef.density = 100f
-        fixtureDef.restitution = 1f
+        fixtureDef.restitution = 0.5f
         //fixtureDef.isSensor = true
 
         body.createFixture(fixtureDef).userData = name
