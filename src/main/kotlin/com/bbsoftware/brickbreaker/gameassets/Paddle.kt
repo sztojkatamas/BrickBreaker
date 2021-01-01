@@ -73,7 +73,6 @@ class Paddle(override val name :String, override var position: Vector2) :GameEnt
 
         val diff = abs(lastMouseX - position.x - width/2)
         if (diff < 30f) {
-            //println(diff)
             body.linearVelocity = body.linearVelocity.cpy().scl(0.9f)
         }
 
@@ -87,7 +86,6 @@ class Paddle(override val name :String, override var position: Vector2) :GameEnt
                     val mousePos  = event.payload as Vector2
                     val diff = mousePos.x - position.x - width/2
 
-                    //println(diff)
                     body.linearVelocity = Vector2(sign(diff), 0f).nor().scl(abs(diff)/10f)
                     lastMouseX = mousePos.x
                 }

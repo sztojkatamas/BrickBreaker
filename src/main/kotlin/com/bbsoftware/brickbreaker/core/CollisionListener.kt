@@ -24,7 +24,7 @@ class CollisionListener : ContactListener {
         /**
          * Paddle - Ball
          */
-        if ((ObjectA is Ball && ObjectB is Paddle) || ((ObjectA is Paddle && ObjectB is Ball))){
+        if ((ObjectA is Ball && ObjectB is Paddle) || (ObjectA is Paddle && ObjectB is Ball)){
             SoundManager.getSound("ballpaddle").play()
         }
 

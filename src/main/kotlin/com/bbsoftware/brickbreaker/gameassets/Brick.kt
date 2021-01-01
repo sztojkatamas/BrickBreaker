@@ -67,8 +67,6 @@ class Brick(override val name :String, override var position: Vector2) :GameEnti
     fun receiveDamage(damage :Int) {
         healthpoints -= damage
         if (healthpoints < 1) {
-            //Game.world.destroyBody(body)
-            //Game.scene.removeEntity(this)
             Game.addEvent(Command("GAME", "destroy", this))
         }
     }

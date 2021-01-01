@@ -30,7 +30,7 @@ class BrickBreakerApplication(): ApplicationAdapter() {
     var debugMatrix: Matrix4? = null
 
     override fun create() {
-        spriteBatch = PolygonSpriteBatch()//SpriteBatch()
+        spriteBatch = PolygonSpriteBatch()
         shapeRenderer = ShapeRenderer()
         Gdx.input.inputProcessor = KeyboardAndMouseProcessor()
         debugRenderer = Box2DDebugRenderer()

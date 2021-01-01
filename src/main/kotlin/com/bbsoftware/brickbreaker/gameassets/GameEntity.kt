@@ -24,6 +24,6 @@ abstract class GameEntity(open val name :String) {
     abstract fun render(batch: Batch)
     abstract fun render(shaperenderer: ShapeRenderer)
 
-    open fun processEvents() {}
-    open fun updatePosition(deltaTime :Float) {}
+    open fun processEvents() {/* To implement */}
+    open fun updatePosition(deltaTime :Float) {/* To implement */}
 }
